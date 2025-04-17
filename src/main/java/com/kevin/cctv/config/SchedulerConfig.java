@@ -10,8 +10,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class SchedulerConfig {
 
+    private final VehicleDetectorService vehicleDetectorService;
+
     @Autowired
-    private VehicleDetectorService vehicleDetectorService;
+    public SchedulerConfig(VehicleDetectorService vehicleDetectorService) {
+        this.vehicleDetectorService = vehicleDetectorService;
+    }
 
     @Scheduled(fixedRate = 1000)
     public void scheduleDataSending() {
