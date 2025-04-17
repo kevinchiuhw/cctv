@@ -1,9 +1,5 @@
 package com.kevin.cctv.service;
 
-import com.kevin.cctv.model.VehicleDetectorData;
-import com.kevin.cctv.model.VehicleDetectorData.DataEntry;
-import com.kevin.cctv.model.VehicleDetectorData.Info;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -12,135 +8,105 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 public class VehicleDetectorService {
     private static final Logger log = LoggerFactory.getLogger(VehicleDetectorService.class);
 
     private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
     private final String baseUrl = "http://localhost:9036/VehicleDetector/data";
 
-    public VehicleDetectorService(RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public VehicleDetectorService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.objectMapper = objectMapper;
     }
 
     public void sendData() {
         try {
-            VehicleDetectorData data = createSampleData();
-
-            // 印出實際發送的 JSON 以供驗證
-            String jsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
-            log.info("Sending JSON: {}", jsonString);
+            String jsonString = """
+            {
+              "1": {
+                "table": "pedflow",
+                "IPCamName": "Taoyuan-YanpingZhshan_PL925-70",
+                "DataStartTime": "2024-04-01 00:00:12",
+                "DataEndTime": "2024-04-01 00:00:15",
+                "ABStartTime": 1711900812,
+                "ABEndTime": 1711900815,
+                "Dir": "D1_2",
+                "Direction": "U",
+                "PersonVolume": 1
+              },
+              "2": {
+                "table": "pedflow",
+                "IPCamName": "Taoyuan-YanpingZhshan_PL925-70",
+                "DataStartTime": "2024-04-01 00:00:12",
+                "DataEndTime": "2024-04-01 00:00:15",
+                "ABStartTime": 1711900812,
+                "ABEndTime": 1711900815,
+                "Dir": "D1_2",
+                "Direction": "D",
+                "PersonVolume": 3
+              },
+              "3": {
+                "table": "pedcross",
+                "IPCamName": " Taoyuan-YanpingZhshan_PL925-70",
+                "DataStartTime": "2024-04-01 00:00:14",
+                "DataEndTime": "2024-04-01 00:00:15",
+                "ABStartTime": 1711900814,
+                "ABEndTime": 1711900815,
+                "Dir": "D1_2",
+                "Info": {
+                  "21": {
+                    "speed": 1.3700000000000001,
+                    "distance": 9.9000000000000004,
+                    "time": 7.2400000000000002,
+                    "record_time": 1711900818000,
+                    "direction": "L",
+                    " birdview_pts ": [0.30285, 0.11238]
+                  },
+                  "60": {
+                    "speed": 2.4500000000000002,
+                    "distance": 11.33,
+                    "time": 4.6200000000000001,
+                    "record_time": 1711900818000,
+                    "direction": "L",
+                    " birdview_pts ": [0.70103, 0.45678]
+                  }
+                }
+              },
+              "4": {
+                "table": "pedevent",
+                "IPCamName": " Taoyuan-YanpingZhshan_PL925-70",
+                "DataStartTime": "2024-04-01 00:00:19",
+                "DataEndTime": "2024-04-01 00:00:20",
+                "ABStartTime": 1711900819,
+                "ABEndTime": 1711900820,
+                "Dir": "D1",
+                "RegionID": 1,
+                "RegionType": 1,
+                "Status": 1
+              },
+              "5": {
+                "table": "flowevent",
+                "IPCamName": " Taoyuan-YanpingZhshan_PL925-70",
+                "DataStartTime": "2024-04-01 00:00:19",
+                "DataEndTime": "2024-04-01 00:00:20",
+                "ABStartTime": 1711900819,
+                "ABEndTime": 1711900820,
+                "Dir": "D1",
+                "RegionID": 1,
+                "Status": 0
+              },
+              "data_num": 5
+            }
+            """;
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<VehicleDetectorData> request = new HttpEntity<>(data, headers);
+            HttpEntity<String> request = new HttpEntity<>(jsonString, headers);
 
             String response = restTemplate.postForObject(baseUrl, request, String.class);
             log.info("資料發送成功: {}", response);
         } catch (Exception e) {
             log.error("準備或發送資料時發生錯誤: {}", e.getMessage(), e);
         }
-    }
-
-    private VehicleDetectorData createSampleData() {
-        VehicleDetectorData data = new VehicleDetectorData();
-
-        // 第一筆資料 - pedflow (U)
-        DataEntry entry1 = new DataEntry();
-        entry1.setTable("pedflow");
-        entry1.setIPCamName("Taoyuan-YanpingZhshan_PL925-70");
-        entry1.setDataStartTime("2024-04-01 00:00:12");
-        entry1.setDataEndTime("2024-04-01 00:00:15");
-        entry1.setABStartTime(1711900812);
-        entry1.setABEndTime(1711900815);
-        entry1.setDir("D1_2");
-        entry1.setDirection("U");
-        entry1.setPersonVolume(1);
-        data.set("1", entry1);
-
-        // 第二筆資料 - pedflow (D)
-        DataEntry entry2 = new DataEntry();
-        entry2.setTable("pedflow");
-        entry2.setIPCamName("Taoyuan-YanpingZhshan_PL925-70");
-        entry2.setDataStartTime("2024-04-01 00:00:12");
-        entry2.setDataEndTime("2024-04-01 00:00:15");
-        entry2.setABStartTime(1711900812);
-        entry2.setABEndTime(1711900815);
-        entry2.setDir("D1_2");
-        entry2.setDirection("D");
-        entry2.setPersonVolume(3);
-        data.set("2", entry2);
-
-        // 第三筆資料 - pedcross
-        DataEntry entry3 = new DataEntry();
-        entry3.setTable("pedcross");
-        entry3.setIPCamName(" Taoyuan-YanpingZhshan_PL925-70"); // 注意前面的空格
-        entry3.setDataStartTime("2024-04-01 00:00:14");
-        entry3.setDataEndTime("2024-04-01 00:00:15");
-        entry3.setABStartTime(1711900814);
-        entry3.setABEndTime(1711900815);
-        entry3.setDir("D1_2");
-
-        Map<String, Info> infoMap = new HashMap<>();
-
-        // Info 21
-        Info info21 = new Info();
-        info21.setSpeed(1.3700000000000001);
-        info21.setDistance(9.9000000000000004);
-        info21.setTime(7.2400000000000002);
-        info21.setRecord_time(1711900818000L);
-        info21.setDirection("L");
-        info21.setBirdviewPts(new double[]{0.30285, 0.11238});
-        infoMap.put("21", info21);
-
-        // Info 60
-        Info info60 = new Info();
-        info60.setSpeed(2.4500000000000002);
-        info60.setDistance(11.33);
-        info60.setTime(4.6200000000000001);
-        info60.setRecord_time(1711900818000L);
-        info60.setDirection("L");
-        info60.setBirdviewPts(new double[]{0.70103, 0.45678});
-        infoMap.put("60", info60);
-
-        entry3.setInfo(infoMap);
-        data.set("3", entry3);
-
-        // 第四筆資料 - pedevent
-        DataEntry entry4 = new DataEntry();
-        entry4.setTable("pedevent");
-        entry4.setIPCamName(" Taoyuan-YanpingZhshan_PL925-70"); // 注意前面的空格
-        entry4.setDataStartTime("2024-04-01 00:00:19");
-        entry4.setDataEndTime("2024-04-01 00:00:20");
-        entry4.setABStartTime(1711900819);
-        entry4.setABEndTime(1711900820);
-        entry4.setDir("D1");
-        entry4.setRegionID(1);
-        entry4.setRegionType(1);
-        entry4.setStatus(1);
-        data.set("4", entry4);
-
-        // 第五筆資料 - flowevent
-        DataEntry entry5 = new DataEntry();
-        entry5.setTable("flowevent");
-        entry5.setIPCamName(" Taoyuan-YanpingZhshan_PL925-70"); // 注意前面的空格
-        entry5.setDataStartTime("2024-04-01 00:00:19");
-        entry5.setDataEndTime("2024-04-01 00:00:20");
-        entry5.setABStartTime(1711900819);
-        entry5.setABEndTime(1711900820);
-        entry5.setDir("D1");
-        entry5.setRegionID(1);
-        entry5.setStatus(0);
-        data.set("5", entry5);
-
-        // 設定資料筆數
-        data.setData_num(5);
-
-        return data;
     }
 }
