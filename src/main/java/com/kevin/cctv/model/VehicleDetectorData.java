@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Arrays;
@@ -24,11 +23,13 @@ public class VehicleDetectorData {
         return dataMap;
     }
 
+    @JsonProperty("data_num")
     public int getData_num() {
         Object num = dataMap.get("data_num");
         return num != null ? (Integer) num : 0;
     }
 
+    @JsonProperty("data_num")
     public void setData_num(int data_num) {
         dataMap.put("data_num", data_num);
     }
@@ -55,120 +56,171 @@ public class VehicleDetectorData {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class DataEntry {
+        @JsonProperty("table")
         private String table;
+
+        @JsonProperty("IPCamName")
         private String IPCamName;
+
+        @JsonProperty("DataStartTime")
         private String DataStartTime;
+
+        @JsonProperty("DataEndTime")
         private String DataEndTime;
+
+        @JsonProperty("ABStartTime")
         private long ABStartTime;
+
+        @JsonProperty("ABEndTime")
         private long ABEndTime;
+
+        @JsonProperty("Dir")
         private String Dir;
+
+        @JsonProperty("Direction")
         private String Direction;
+
+        @JsonProperty("PersonVolume")
         private Integer PersonVolume;
+
+        @JsonProperty("Info")
         private Map<String, Info> Info;
+
+        @JsonProperty("RegionID")
         private Integer RegionID;
+
+        @JsonProperty("RegionType")
         private Integer RegionType;
+
+        @JsonProperty("Status")
         private Integer Status;
 
+        @JsonProperty("table")
         public String getTable() {
             return table;
         }
 
+        @JsonProperty("table")
         public void setTable(String table) {
             this.table = table;
         }
 
+        @JsonProperty("IPCamName")
         public String getIPCamName() {
             return IPCamName;
         }
 
+        @JsonProperty("IPCamName")
         public void setIPCamName(String IPCamName) {
             this.IPCamName = IPCamName;
         }
 
+        @JsonProperty("DataStartTime")
         public String getDataStartTime() {
             return DataStartTime;
         }
 
+        @JsonProperty("DataStartTime")
         public void setDataStartTime(String DataStartTime) {
             this.DataStartTime = DataStartTime;
         }
 
+        @JsonProperty("DataEndTime")
         public String getDataEndTime() {
             return DataEndTime;
         }
 
+        @JsonProperty("DataEndTime")
         public void setDataEndTime(String DataEndTime) {
             this.DataEndTime = DataEndTime;
         }
 
+        @JsonProperty("ABStartTime")
         public long getABStartTime() {
             return ABStartTime;
         }
 
+        @JsonProperty("ABStartTime")
         public void setABStartTime(long ABStartTime) {
             this.ABStartTime = ABStartTime;
         }
 
+        @JsonProperty("ABEndTime")
         public long getABEndTime() {
             return ABEndTime;
         }
 
+        @JsonProperty("ABEndTime")
         public void setABEndTime(long ABEndTime) {
             this.ABEndTime = ABEndTime;
         }
 
+        @JsonProperty("Dir")
         public String getDir() {
             return Dir;
         }
 
+        @JsonProperty("Dir")
         public void setDir(String Dir) {
             this.Dir = Dir;
         }
 
+        @JsonProperty("Direction")
         public String getDirection() {
             return Direction;
         }
 
+        @JsonProperty("Direction")
         public void setDirection(String Direction) {
             this.Direction = Direction;
         }
 
+        @JsonProperty("PersonVolume")
         public Integer getPersonVolume() {
             return PersonVolume;
         }
 
+        @JsonProperty("PersonVolume")
         public void setPersonVolume(Integer PersonVolume) {
             this.PersonVolume = PersonVolume;
         }
 
+        @JsonProperty("Info")
         public Map<String, Info> getInfo() {
             return Info;
         }
 
+        @JsonProperty("Info")
         public void setInfo(Map<String, Info> Info) {
             this.Info = Info;
         }
 
+        @JsonProperty("RegionID")
         public Integer getRegionID() {
             return RegionID;
         }
 
+        @JsonProperty("RegionID")
         public void setRegionID(Integer RegionID) {
             this.RegionID = RegionID;
         }
 
+        @JsonProperty("RegionType")
         public Integer getRegionType() {
             return RegionType;
         }
 
+        @JsonProperty("RegionType")
         public void setRegionType(Integer RegionType) {
             this.RegionType = RegionType;
         }
 
+        @JsonProperty("Status")
         public Integer getStatus() {
             return Status;
         }
 
+        @JsonProperty("Status")
         public void setStatus(Integer Status) {
             this.Status = Status;
         }
@@ -221,58 +273,80 @@ public class VehicleDetectorData {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Info {
+        @JsonProperty("speed")
         private double speed;
+
+        @JsonProperty("distance")
         private double distance;
+
+        @JsonProperty("time")
         private double time;
+
+        @JsonProperty("record_time")
         private long record_time;
+
+        @JsonProperty("direction")
         private String direction;
+
         @JsonProperty(" birdview_pts ")
         private double[] birdviewPts;
 
+        @JsonProperty("speed")
         public double getSpeed() {
             return speed;
         }
 
+        @JsonProperty("speed")
         public void setSpeed(double speed) {
             this.speed = speed;
         }
 
+        @JsonProperty("distance")
         public double getDistance() {
             return distance;
         }
 
+        @JsonProperty("distance")
         public void setDistance(double distance) {
             this.distance = distance;
         }
 
+        @JsonProperty("time")
         public double getTime() {
             return time;
         }
 
+        @JsonProperty("time")
         public void setTime(double time) {
             this.time = time;
         }
 
+        @JsonProperty("record_time")
         public long getRecord_time() {
             return record_time;
         }
 
+        @JsonProperty("record_time")
         public void setRecord_time(long record_time) {
             this.record_time = record_time;
         }
 
+        @JsonProperty("direction")
         public String getDirection() {
             return direction;
         }
 
+        @JsonProperty("direction")
         public void setDirection(String direction) {
             this.direction = direction;
         }
 
+        @JsonProperty(" birdview_pts ")
         public double[] getBirdviewPts() {
             return birdviewPts;
         }
 
+        @JsonProperty(" birdview_pts ")
         public void setBirdviewPts(double[] birdviewPts) {
             this.birdviewPts = birdviewPts;
         }
