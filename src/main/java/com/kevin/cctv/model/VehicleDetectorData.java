@@ -1,7 +1,10 @@
 package com.kevin.cctv.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Arrays;
@@ -9,23 +12,25 @@ import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VehicleDetectorData {
-    private Map<String, DataEntry> entries = new HashMap<>();
-    private int data_num;
+    private Map<String, Object> dataMap = new HashMap<>();
 
-    public Map<String, DataEntry> getEntries() {
-        return entries;
+    @JsonAnySetter
+    public void set(String key, Object value) {
+        dataMap.put(key, value);
     }
 
-    public void setEntries(Map<String, DataEntry> entries) {
-        this.entries = entries;
+    @JsonAnyGetter
+    public Map<String, Object> get() {
+        return dataMap;
     }
 
     public int getData_num() {
-        return data_num;
+        Object num = dataMap.get("data_num");
+        return num != null ? (Integer) num : 0;
     }
 
     public void setData_num(int data_num) {
-        this.data_num = data_num;
+        dataMap.put("data_num", data_num);
     }
 
     @Override
@@ -33,22 +38,22 @@ public class VehicleDetectorData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VehicleDetectorData that = (VehicleDetectorData) o;
-        return data_num == that.data_num && Objects.equals(entries, that.entries);
+        return Objects.equals(dataMap, that.dataMap);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(entries, data_num);
+        return Objects.hash(dataMap);
     }
 
     @Override
     public String toString() {
         return "VehicleDetectorData{" +
-                "entries=" + entries +
-                ", data_num=" + data_num +
+                "dataMap=" + dataMap +
                 '}';
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class DataEntry {
         private String table;
         private String IPCamName;
@@ -193,8 +198,28 @@ public class VehicleDetectorData {
             return Objects.hash(table, IPCamName, DataStartTime, DataEndTime, ABStartTime, ABEndTime,
                     Dir, Direction, PersonVolume, Info, RegionID, RegionType, Status);
         }
+
+        @Override
+        public String toString() {
+            return "DataEntry{" +
+                    "table='" + table + '\'' +
+                    ", IPCamName='" + IPCamName + '\'' +
+                    ", DataStartTime='" + DataStartTime + '\'' +
+                    ", DataEndTime='" + DataEndTime + '\'' +
+                    ", ABStartTime=" + ABStartTime +
+                    ", ABEndTime=" + ABEndTime +
+                    ", Dir='" + Dir + '\'' +
+                    ", Direction='" + Direction + '\'' +
+                    ", PersonVolume=" + PersonVolume +
+                    ", Info=" + Info +
+                    ", RegionID=" + RegionID +
+                    ", RegionType=" + RegionType +
+                    ", Status=" + Status +
+                    '}';
+        }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Info {
         private double speed;
         private double distance;
@@ -270,6 +295,18 @@ public class VehicleDetectorData {
             int result = Objects.hash(speed, distance, time, record_time, direction);
             result = 31 * result + Arrays.hashCode(birdviewPts);
             return result;
+        }
+
+        @Override
+        public String toString() {
+            return "Info{" +
+                    "speed=" + speed +
+                    ", distance=" + distance +
+                    ", time=" + time +
+                    ", record_time=" + record_time +
+                    ", direction='" + direction + '\'' +
+                    ", birdviewPts=" + Arrays.toString(birdviewPts) +
+                    '}';
         }
     }
 }
