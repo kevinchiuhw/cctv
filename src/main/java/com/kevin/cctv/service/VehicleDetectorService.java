@@ -13,7 +13,9 @@ public class VehicleDetectorService {
     private static final Logger log = LoggerFactory.getLogger(VehicleDetectorService.class);
 
     private final RestTemplate restTemplate;
-    private final String baseUrl = "http://localhost:9036/VehicleDetector/data";
+    //private final String baseUrl = "http://localhost:9036/VehicleDetector/data";
+    private final String baseUrl = "http://tcis-post-controller-service:9036/VehicleDetector/data";
+
 
     public VehicleDetectorService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -26,33 +28,33 @@ public class VehicleDetectorService {
               "1": {
                 "table": "pedflow",
                 "IPCamName": "Taoyuan-YanpingZhshan_PL925-70",
-                "DataStartTime": "2024-04-01 00:00:12",
-                "DataEndTime": "2024-04-01 00:00:15",
+                "DataStartTime": "2024-04-01 06:00:12",
+                "DataEndTime": "2024-04-01 11:00:15",
                 "ABStartTime": 1711900812,
                 "ABEndTime": 1711900815,
-                "Dir": "D1_2",
+                "Dir": "D1-1",
                 "Direction": "U",
                 "PersonVolume": 1
               },
               "2": {
                 "table": "pedflow",
                 "IPCamName": "Taoyuan-YanpingZhshan_PL925-70",
-                "DataStartTime": "2024-04-01 00:00:12",
-                "DataEndTime": "2024-04-01 00:00:15",
+                "DataStartTime": "2024-04-01 06:00:12",
+                "DataEndTime": "2024-04-01 11:00:15",
                 "ABStartTime": 1711900812,
                 "ABEndTime": 1711900815,
-                "Dir": "D1_2",
+                "Dir": "D1-1",
                 "Direction": "D",
                 "PersonVolume": 3
               },
               "3": {
                 "table": "pedcross",
                 "IPCamName": " Taoyuan-YanpingZhshan_PL925-70",
-                "DataStartTime": "2024-04-01 00:00:14",
-                "DataEndTime": "2024-04-01 00:00:15",
+                "DataStartTime": "2024-04-01 06:00:14",
+                "DataEndTime": "2024-04-01 11:00:15",
                 "ABStartTime": 1711900814,
                 "ABEndTime": 1711900815,
-                "Dir": "D1_2",
+                "Dir": "D1-1",
                 "Info": {
                   "21": {
                     "speed": 1.3700000000000001,
@@ -75,11 +77,11 @@ public class VehicleDetectorService {
               "4": {
                 "table": "pedevent",
                 "IPCamName": " Taoyuan-YanpingZhshan_PL925-70",
-                "DataStartTime": "2024-04-01 00:00:19",
-                "DataEndTime": "2024-04-01 00:00:20",
+                "DataStartTime": "2024-04-01 06:00:19",
+                "DataEndTime": "2024-04-01 11:00:20",
                 "ABStartTime": 1711900819,
                 "ABEndTime": 1711900820,
-                "Dir": "D1",
+                "Dir": "D1-1",
                 "RegionID": 1,
                 "RegionType": 1,
                 "Status": 1
@@ -87,11 +89,11 @@ public class VehicleDetectorService {
               "5": {
                 "table": "flowevent",
                 "IPCamName": " Taoyuan-YanpingZhshan_PL925-70",
-                "DataStartTime": "2024-04-01 00:00:19",
-                "DataEndTime": "2024-04-01 00:00:20",
+                "DataStartTime": "2024-04-01 06:00:19",
+                "DataEndTime": "2024-04-01 11:00:20",
                 "ABStartTime": 1711900819,
                 "ABEndTime": 1711900820,
-                "Dir": "D1",
+                "Dir": "D1-1",
                 "RegionID": 1,
                 "Status": 0
               },

@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cctv-config
+data:
+  cctv.yaml: |
+    camera:
+      resolution:
+        width: 1280
+        height: 720
+      fps: 30
+    recording:
+      format: mp4
+      segmentDuration: 600  # 10 minutes in seconds
+    motionDetection:
+      enabled: true
+      sensitivity: medium
+    storage:
+      limit: 50GB
+      retention: 30  # days
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cctv-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cctv
+  labels:
+    app: cctv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cctv
+  template:
+    metadata:
+      labels:
+        app: cctv
+    spec:
+      containers:
+      - name: cctv
+        image: kevinchiuhw/cctv:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+        - name: storage-volume
+          mountPath: /app/recordings
+      volumes:
+      - name: config-volume
+        configMap:
+          name: cctv-config
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: cctv-storage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cctv
+spec:
+  selector:
+    app: cctv
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
