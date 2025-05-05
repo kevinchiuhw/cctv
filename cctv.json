@@ -1,0 +1,26 @@
+{
+  "1": {
+    "table": "pedevent",
+    "IPCamName": "Taoyuan-YanpingZhshan_PL925-70",
+    "DataStartTime": "2024-04-01 06:00:19",
+    "DataEndTime": "2024-04-01 11:00:20",
+    "ABStartTime": 1711900819,
+    "ABEndTime": 1711900820,
+    "Dir": "D1-1",
+    "RegionID": 1,
+    "RegionType": 1,
+    "Status": 1
+  },
+  "2": {
+    "table": "flowevent",
+    "IPCamName": "Taoyuan-YanpingZhshan_PL925-70",
+    "DataStartTime": "2024-04-01 06:00:19",
+    "DataEndTime": "2024-04-01 11:00:20",
+    "ABStartTime": 1711900819,
+    "ABEndTime": 1711900820,
+    "Dir": "D1-1",
+    "RegionID": 1,
+    "Status": 0
+  },
+  "data_num": 2
+}
